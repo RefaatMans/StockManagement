@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body onload="printReciept();">
+    <div id="pdf-content" style="background-color: white" class="">
+      <div style="min-height: 35vh" id="tableDiv">
+        <!-- add table here -->
+      </div>
+      <div class="cart-total text-center">
+        <h3 id="total">Total: $0.00</h3>
+      </div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      const printReciept = async () => {
+        const content = document.getElementById("pdf-content");
+        var htmlString = sessionStorage.getItem("content");
+        var pattern = /<div class="cart-total">[\s\S]*?<\/div>/;
+        let pattern2 =
+          /<div class="d-flex justify-content-end">[\s\S]*?<\/div>/;
+        var modifiedHtmlString = htmlString.replace(pattern2, "");
+        let modifiedHtmlString1 = modifiedHtmlString.replace(pattern, "");
+        console.log(modifiedHtmlString);
+        console.log(modifiedHtmlString1);
+        document.getElementById("tableDiv").innerHTML = modifiedHtmlString1;
+        document.getElementById("total").innerHTML =
+          sessionStorage.getItem("totalPrice");
+        let name = sessionStorage.getItem("clientName");
+        let opt = {
+          margin: 1,
+          filename: `${name}.pdf`,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: {
+            unit: "mm",
+            format: [80, 297],
+            orientation: "portrait",
+          },
+        };
+        await html2pdf().set(opt).from(content).save();
+        window.location = `cart.html`;
+      };
+    </script>
+  </body>
+</html>

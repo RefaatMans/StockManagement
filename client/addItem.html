@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Yousef Web</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <!-- <link href="assets/img/favicon.png" rel="icon" /> -->
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <!-- =======================================================
+  * Template Name: Knight
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/knight-free-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  </head>
+  <script>
+    if (!sessionStorage.getItem("loggedIn")) window.location = `index.html`;
+  </script>
+
+  <body onload="fillCategories(); menu(); checkForEdit()">
+    <header id="header"></header>
+    <!-- ======= Hero Section ======= -->
+    <section id="hero">
+      <div class="hero-container">
+        <h1 data-aos="fade-up" data-aos-delay="200" id="title">Add Item</h1>
+
+        <div
+          data-aos="fade-up"
+          data-aos-delay="200"
+          id="detailsDiv"
+          class="detailsDiv"
+        >
+          <form onsubmit="addItem(event)">
+            <div class="d-flex justify-content-center d-none" id="activeBtn">
+              <label class="me-1 d-flex align-items-center">Active</label>
+              <label class="switch">
+                <input type="checkbox" id="activeCheckBox" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <label for="category">Product Category:</label>
+            <select name="category" id="category">
+              <option value="category">Category</option>
+              <hr />
+            </select>
+
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="Currency">Product Currency:</label>
+            <select name="Currency" id="Currency">
+              <option value="Currency">Currency</option>
+              <hr />
+            </select>
+
+            <label for="price">Product Price:</label>
+            <input type="number" id="price" name="price" required />
+
+            <label for="sellingCurrency">Selling Currency:</label>
+            <select name="Currency" id="sellingCurrency">
+              <option value="Currency">Currency</option>
+              <hr />
+            </select>
+
+            <label for="sellingprice">Selling Price:</label>
+            <input
+              type="number"
+              id="sellingprice"
+              name="sellingprice"
+              required
+            />
+            <label for="address">Product Image:</label>
+            <input type="text" id="image" name="address" rows="4" required />
+            <button type="submit">Add Item</button>
+            <button
+              style="background-color: red"
+              class="d-none"
+              onclick="deleteItem()"
+              id="deleteBtn"
+            >
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </form>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200" id="saved" class="d-none">
+          <h2 style="color: red">Saved Successfully</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- End Hero -->
+
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/myjs.js"></script>
+    <script src="assets/js/api/categoryApi.js"></script>
+    <script src="assets/js/api/itemApi.js"></script>
+  </body>
+</html>

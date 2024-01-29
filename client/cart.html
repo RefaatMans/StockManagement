@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Yousef Web</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <!-- <link href="assets/img/favicon.png" rel="icon" /> -->
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+  </head>
+  <script>
+    if (!sessionStorage.getItem("loggedIn")) window.location = `index.html`;
+  </script>
+
+  <body onload="menu(); fillCartItems(sessionStorage.getItem('cartItems'))">
+    <header id="header"></header>
+    <!-- ======= Hero Section ======= -->
+    <section id="hero">
+      <div class="hero-container">
+        <!-- End Hero -->
+        <!-- POS Section -->
+
+        <div
+          data-aos="fade-up"
+          data-aos-delay="200"
+          id="posDiv"
+          class="posDiv mb-2"
+        >
+          <div class="one-third">
+            <h3
+              style="color: white; text-align: start"
+              class="ClientNameH"
+              id="clientName"
+            >
+              <script>
+                document.getElementById("clientName").innerHTML =
+                  sessionStorage.getItem("clientName");
+              </script>
+            </h3>
+            <section id="cart">
+              <div id="itemsDiv"></div>
+
+              <div class="cart-total">
+                <h3 style="color: white" id="totalPrice">Total: $0.00</h3>
+                <div>
+                  <button class="checkout-btn" onclick="fillReceipt()">
+                    <a href="#"><i class="bi bi-floppy-fill"></i> save</a>
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- this is the reciept -->
+        <div
+          id="pdf-content"
+          style="background-color: white"
+          class="cartSaveDiv d-flex flex-column p-3 d-none"
+        >
+          <div class="d-flex justify-content-end">
+            <button
+              style="width: 10%; text-align: center"
+              onclick="exitReceipt()"
+            >
+              X
+            </button>
+          </div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <img
+              src="./assets/img/iService.png"
+              style="background-color: black"
+              width="50"
+              alt=""
+            />
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between">
+            <p id="recieptName">ClientName</p>
+            <p id="recietNb">Reciept Nb: #</p>
+          </div>
+          <hr />
+          <div><p id="recieptDate">time date</p></div>
+          <hr />
+          <div style="min-height: 35vh">
+            <table style="width: 100%" id="receiptTable">
+              <tr>
+                <th class="text-start">Name</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th class="text-end">Total</th>
+              </tr>
+            </table>
+          </div>
+          <div class="cart-total">
+            <h3 id="recieptTotal">Total: $0.00</h3>
+            <div>
+              <button class="checkout-btn" onclick="saveCart()">
+                <i class="bi bi-floppy-fill"></i> save
+              </button>
+              <button
+                class="checkout-btn"
+                id="download-pdf"
+                onclick="saveCart();printReciept()"
+              >
+                <i class="bi bi-printer-fill"></i> Print
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- End of POS Section -->
+      </div>
+      <style>
+        table tr {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.671);
+        }
+      </style>
+    </section>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      const printReciept = async () => {
+        let content = document.getElementById("pdf-content").innerHTML;
+        console.log(content);
+        let totalNb = document.getElementById("recieptTotal").innerHTML;
+        console.log(totalNb);
+        sessionStorage.setItem("totalPrice", totalNb);
+        sessionStorage.setItem("content", content);
+        window.location = `print.html`;
+      };
+    </script>
+
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/api/cartApi.js"></script>
+    <script src="assets/js/dropdown.js"></script>
+    <script src="assets/js/myjs.js"></script>
+  </body>
+</html>
